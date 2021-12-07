@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="string">
+		<xs:list itemType="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="errors" type="errors"/>
+	<xs:complexType name="errors">
+		<xs:sequence>
+			<xs:element name="error" type="error" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="error" type="error"/>
+	<xs:complexType name="error">
+		<xs:simpleContent>
+			<xs:extension base="string">
+				<xs:attribute name="id" use="required" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

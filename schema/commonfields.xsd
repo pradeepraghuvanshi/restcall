@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="field" type="field"/>
+	<xs:complexType name="field">
+		<xs:simpleContent>
+			<xs:extension base="string">
+				<xs:attribute name="id" use="required" type="string"/>
+				<xs:attribute name="type" use="required" type="string"/>
+				<xs:attribute name="sizeMin" use="optional" type="xs:integer"/>
+				<xs:attribute name="sizeMax" use="optional" type="xs:integer"/>
+				<xs:attribute name="portalid" use="required" type="string"/>
+				<xs:attribute name="listValue" use="optional" type="string"/>
+				<xs:attribute name="mapping" use="optional" type="string"/>
+				<xs:attribute name="description" use="optional" type="string"/>
+				<xs:attribute name="example_value" use="optional" type="string"/>
+				<xs:attribute name="opcoder_value" use="optional" type="string"/>
+				<xs:attribute name="opcoder_function" use="optional" type="string"/>
+				<xs:attribute name="notEmptyIfProvided" use="optional" type="typeBoolean"/>
+				<xs:attribute name="required" use="optional" type="typeBoolean"/>
+				<xs:attribute name="nullAuthorized" use="optional" type="typeBoolean"/>
+				<xs:attribute name="valueMin" use="optional" type="xs:integer"/>
+				<xs:attribute name="valueMax" use="optional" type="xs:integer"/>
+				<xs:attribute name="ConfigKey" use="optional" type="string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="string">
+		<xs:list itemType="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="typeBoolean">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="fields" type="fields"/>
+	<xs:complexType name="fields">
+		<xs:sequence>
+			<xs:element name="field" type="field" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

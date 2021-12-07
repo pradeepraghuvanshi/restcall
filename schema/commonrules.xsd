@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="rules" type="rules"/>
+	<xs:complexType name="rules">
+		<xs:sequence>
+			<xs:element name="rule" type="rule" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="rule" type="rule"/>
+	<xs:complexType name="rule">
+		<xs:all>
+			<xs:element name="description" type="description" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="globalImplementation" type="globalImplementation" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" use="required" type="string"/>
+		<xs:attribute name="type" use="required" type="typeRule"/>
+	</xs:complexType>
+	<xs:element name="description" type="description"/>
+	<xs:complexType name="description">
+		<xs:simpleContent>
+			<xs:extension base="string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="string">
+		<xs:list itemType="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="error" type="error"/>
+	<xs:complexType name="error">
+		<xs:sequence/>
+		<xs:attribute name="refid" use="required" type="string"/>
+	</xs:complexType>
+	<xs:simpleType name="typeRule">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="management"/>
+			<xs:enumeration value="formatting"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="globalImplementation" type="globalImplementation"/>
+	<xs:complexType name="globalImplementation">
+		<xs:sequence/>
+		<xs:attribute name="source" use="required" type="string"/>
+		<xs:attribute name="type" use="required" type="string"/>
+	</xs:complexType>
+</xs:schema>

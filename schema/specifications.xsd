@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="implementation" type="implementation" nillable="true"/>
+	<xs:complexType name="implementation">
+		<xs:sequence/>
+		<xs:attribute name="source" use="required" type="string"/>
+		<xs:attribute name="type" use="required" type="typeImplementation"/>
+	</xs:complexType>
+	<xs:simpleType name="typeImplementation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="policy"/>
+			<xs:enumeration value="opcode"/>
+			<xs:enumeration value="surfaceChecking"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="elementInRef" type="elementInRef" nillable="true"/>
+	<xs:complexType name="elementInRef">
+		<xs:sequence/>
+		<xs:attribute name="name" use="required" type="string"/>
+	</xs:complexType>
+	<xs:element name="error" type="error" nillable="true"/>
+	<xs:complexType name="error">
+		<xs:simpleContent>
+			<xs:extension base="string">
+				<xs:attribute name="id" use="optional" type="string"/>
+				<xs:attribute name="refid" use="optional" type="string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="string">
+		<xs:list itemType="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="group" type="group" nillable="true"/>
+	<xs:complexType name="group">
+		<xs:sequence>
+			<xs:element name="elementInRef" type="elementInRef" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="required" type="typeGroup"/>
+	</xs:complexType>
+	<xs:simpleType name="typeGroup">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="one-only"/>
+			<xs:enumeration value="one-not-null"/>
+			<xs:enumeration value="one-or-none"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="infranet" type="infranet" nillable="true"/>
+	<xs:complexType name="infranet">
+		<xs:sequence/>
+		<xs:attribute name="opcodeId" use="required" type="xs:integer"/>
+		<xs:attribute name="opcodeName" use="required" type="string"/>
+		<xs:attribute name="module" use="required" type="string"/>
+		<xs:attribute name="indice" use="optional" type="string"/>
+	</xs:complexType>
+	<xs:element name="input" type="input" nillable="true"/>
+	<xs:complexType name="input">
+		<xs:sequence>
+			<xs:element name="field" type="field" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="definitions" type="definitions" nillable="true"/>
+	<xs:complexType name="definitions">
+		<xs:sequence>
+			<xs:element name="service" type="service" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="prerequisite" type="prerequisite" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="input" type="input" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="output" type="output" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="algorithm" type="algorithm" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="rules" type="rules" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="errors" type="errors" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="service" type="service" nillable="true"/>
+	<xs:complexType name="service">
+		<xs:sequence>
+			<xs:element name="description" type="description" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="infranet" type="infranet" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="name" use="required" type="string"/>
+		<xs:attribute name="id" use="optional" type="string"/>
+		<xs:attribute name="version" use="required" type="string"/>
+		<xs:attribute name="status" use="required" type="statusService"/>
+		<xs:attribute name="fm" use="optional" type="string"/>
+		<xs:attribute name="type" use="optional" type="string"/>
+	</xs:complexType>
+	<xs:element name="prerequisite" type="prerequisite" nillable="true"/>
+	<xs:complexType name="prerequisite">
+		<xs:sequence>
+			<xs:element name="service_prerequisite" type="service_prerequisite" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="algorithm" type="algorithm" nillable="true"/>
+	<xs:complexType name="algorithm">
+		<xs:simpleContent>
+			<xs:extension base="string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="rules" type="rules"/>
+	<xs:complexType name="rules">
+		<xs:sequence>
+			<xs:element name="rule" type="rule" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="errors" type="errors"/>
+	<xs:complexType name="errors">
+		<xs:sequence>
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="description" type="description" nillable="true"/>
+	<xs:complexType name="description">
+		<xs:simpleContent>
+			<xs:extension base="string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="rule" type="rule"/>
+	<xs:complexType name="rule">
+		<xs:sequence>
+			<xs:element name="description" type="description" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="group" type="group" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="elementInRef" type="elementInRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="implementation" type="implementation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" use="optional" type="string"/>
+		<xs:attribute name="refid" use="optional" type="string"/>
+		<xs:attribute name="type" use="optional" type="typeRule"/>
+	</xs:complexType>
+	<xs:element name="field" type="field"/>
+	<xs:complexType name="field">
+		<xs:sequence>
+			<xs:element name="rule" type="rule" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="field" type="field" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" use="optional" type="string"/>
+		<xs:attribute name="type" use="optional" type="string"/>
+		<xs:attribute name="refid" use="optional" type="string"/>
+		<xs:attribute name="portalid" use="optional" type="string"/>
+		<xs:attribute name="mapping" use="optional" type="string"/>
+		<xs:attribute name="description" use="optional" type="string"/>
+		<xs:attribute name="example_value" use="optional" type="string"/>
+		<xs:attribute name="opcoder_value" use="optional" type="string"/>
+		<xs:attribute name="opcoder_function" use="optional" type="string"/>
+		<xs:attribute name="required" use="optional" type="typeBoolean"/>
+		<xs:attribute name="notEmptyIfProvided" use="optional" type="typeBoolean"/>
+		<xs:attribute name="nullAuthorized" use="optional" type="typeBoolean"/>
+		<xs:attribute name="sizeMin" use="optional" type="xs:integer"/>
+		<xs:attribute name="sizeMax" use="optional" type="xs:integer"/>
+		<xs:attribute name="listValue" use="optional" type="string"/>
+		<xs:attribute name="ConfigKey" use="optional" type="string"/>
+		<xs:attribute name="valueMin" use="optional" type="xs:integer"/>
+		<xs:attribute name="valueMax" use="optional" type="xs:integer"/>
+	</xs:complexType>
+	<xs:simpleType name="typeBoolean">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="output" type="output" nillable="true"/>
+	<xs:complexType name="output">
+		<xs:sequence>
+			<xs:element name="field" type="field" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="typeRule">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="management"/>
+			<xs:enumeration value="formatting"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="service_prerequisite" type="service_prerequisite" nillable="true"/>
+	<xs:complexType name="service_prerequisite">
+		<xs:sequence/>
+		<xs:attribute name="name" use="required" type="string"/>
+		<xs:attribute name="type" use="required" type="xs:string"/>
+	</xs:complexType>
+	<xs:simpleType name="typeServicePrerequisite">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="one-shot"/>
+			<xs:enumeration value="each-time"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="statusService">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="available"/>
+			<xs:enumeration value="unavailable"/>
+			<xs:enumeration value="deprecated"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
